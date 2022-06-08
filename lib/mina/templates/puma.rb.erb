@@ -1,0 +1,10 @@
+
+max_threads_count = <%= fetch :puma_max_threads, 5 %>
+min_threads_count = <%= fetch :puma_min_threads, 5 %>
+threads min_threads_count, max_threads_count
+bind "<%= "unix://#{fetch :puma_socket_listen_stream}" %>"
+environment "<%= fetch :rails_env %>"
+pidfile "tmp/pids/server.pid"
+workers <%= fetch :puma_worker, 2 %>
+preload_app!
+

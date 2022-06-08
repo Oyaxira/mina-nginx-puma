@@ -1,0 +1,20 @@
+<% application_name = fetch :application_name, 'puma' %>
+<% system_socket_name = "#{fetch(:application_name)}.socket" %>
+<% puma_user = fetch :user, 'root' %>
+<% system_bundler_path = fetch :system_bundler_path, '/usr/local/rvm/bin/rvm all do bundle' %>
+<% puma_config_path = fetch :puma_config_path, "#{fetch(:deploy_to)}/shared/config/puma.rb" %>
+
+[Unit]
+Description=<%= application_name %> Puma Service
+After=network.target
+Requires= <%= system_socket_name %>
+
+[Service]
+Type=simple
+User=<%= puma_user %>
+WorkingDirectory=<%= fetch :current_path %>
+ExecStart=<%= system_bundler_path %> exec puma -C <%= puma_config_path %>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

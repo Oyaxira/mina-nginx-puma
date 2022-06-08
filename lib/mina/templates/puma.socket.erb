@@ -1,0 +1,14 @@
+<% application_name = fetch :application_name, 'puma' %>
+<% puma_socket_listen_stream = fetch :puma_socket_listen_stream, '127.0.0.1:3000' %>
+
+[Unit]
+Description=<%= application_name %> Puma Socket
+
+[Socket]
+ListenStream=<%= puma_socket_listen_stream %>
+NoDelay=true
+ReusePort=true
+Backlog=1024
+
+[Install]
+WantedBy=sockets.target
