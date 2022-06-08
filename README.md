@@ -9,7 +9,9 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mina-nginx-puma'
+group :development do
+    gem 'mina-nginx-puma'
+end
 ```
 
 And then execute:
@@ -50,9 +52,29 @@ set :use_ssl, false
 ```
 
 2. how to work
-- check mina -T
+- check mina -T view all list
+- mina puma:install
+- mina puma:setup
+- after mina deploy
+- mina puma:restart
 
+- after mina deploy
+```ruby
+task :deploy do
+    deploy do
+        invoke :'git:clone'
+        invoke :'deploy:link_shared_paths'
+        invoke :'bundle:install'
+        invoke :'rails:db_migrate'
+        invoke :'rails:assets_precompile'
+        invoke :'deploy:cleanup'
+        on :launch do
+            invoke :'puma:restart' # add this line
+        end
+    end
 
+end
+```
 
 ## Development
 
