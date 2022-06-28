@@ -42,6 +42,7 @@ namespace :puma do
     comment %(enable service )
     command %(#{fetch(:systemctl_path)} enable #{fetch :system_service_name})
     command %(#{fetch(:systemctl_path)} enable #{fetch :system_socket_name})
+    comment %(pls run 'mina puma:config' to check puma config )
   end
   desc 'remove puma config'
   task :remove do
